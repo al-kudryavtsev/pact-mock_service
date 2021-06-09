@@ -83,7 +83,8 @@ module Pact
     end
 
     def webrick_opts
-      opts = { Host: host.nil? ? 'localhost' : host, Port: port.nil? ? 0 : port, AccessLog: [], Logger: WEBrick::Log::new(nil, 0) }
+      opts = { Port: port.nil? ? 0 : port, AccessLog: [], Logger: WEBrick::Log::new(nil, 0) }
+      opts.merge!({ Host: host }) if host.present?
       opts.merge!({
         :SSLCertificate => OpenSSL::X509::Certificate.new(File.open(options[:sslcert]).read) }) if options[:sslcert]
       opts.merge!({
